@@ -13,28 +13,27 @@ complete <- function(directory, id = 1:332) {
   ## where 'id' is the monitor ID number and 'nobs' is the
   ## number of complete cases
   
+  # preallocate data file for performance
   nFiles <- length(id)
-  print(paste("Num Files - ",nFiles))
   dfComplete <- data.frame(id=integer(nFiles),nobs=numeric(nFiles))
+
+  # count variable will allow us to add row to preallocated data file
+  count <- 0
   
   for (n in id) {
     # create file name by concatenating parts and adding leading zeros
     file <- file.path(directory, paste0(paste(rep("0", 3-nchar(n)), collapse=""), n, ".csv"))
     
-    # read file and merge it with master data frame
+    # read file 
     dfFile <- read.table(file, header=TRUE, sep = ",", stringsAsFactors = FALSE)
     
+    # create logical vector of complete cases 
     OK <- complete.cases(dfFile)
-    # print(paste("Class -",class(OK)))
-    # print(paste("dfFile Str -", str(dfFile)))
-    # print(paste("dfFile Str -", str(OK)))
-    print(file)
-    print(n)
-    print(length(OK[OK]))
     
-    # dfComplete <- rbind(dfComplete, 
-    #                    data.frame(id=n, nobs=length(OK[OK])))
+    # use vector to add number of complete cases to data frame
+    count <- count + 1
+    dfComplete[count,] <- c(n,length(OK[OK]))
   }
   
-  
+  return(dfComplete)
 }
