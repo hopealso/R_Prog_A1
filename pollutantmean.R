@@ -13,9 +13,10 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   ## in the 'id' vector (ignoring NA values)
   ## NOTE: Do not round the result!
   
-  dfPollution <- data.frame(matrix(nrow=length(id), ncol=4))
-  names(dfPollution) <- c("Date","sulfate","nitrate","ID")
-  print(dfPollution)
+  ## dfPollution <- data.frame(matrix(nrow=length(id), ncol=4))
+  ## names(dfPollution) <- c("Date","sulfate","nitrate","ID")
+  dfPollution <- data.frame()
+  ## print(dfPollution)
   
   for (n in id) {
     # create file name by concatenating parts and adding leading zeros
@@ -29,5 +30,11 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     dfPollution <- rbind(dfFile, dfPollution)
     print(paste("Total Rows - ", nrow(dfPollution)))
   }
+  
+  print(head(dfPollution[pollutant]))
+  print(paste("Class - ", class(dfPollution[pollutant])))
+  print(paste("Mean -", mean(dfPollution)))
+  
+  ## return(mean(dfPollution[pollutant], na.rm = TRUE))
   
 }
