@@ -10,6 +10,11 @@ corr <- function(directory, threshold = 0) {
   ## Return a numeric vector of correlations
   ## NOTE: Do not round the result!
   
+  # create data fram of complete cases for all the files
+  dfComplete <- complete("specdata")
+  str(dfComplete)
   
+  dfQualified <- dfComplete[dfComplete$nobs>threshold,]
   
+  return(dfQualified)
 }
