@@ -13,7 +13,9 @@ complete <- function(directory, id = 1:332) {
   ## where 'id' is the monitor ID number and 'nobs' is the
   ## number of complete cases
   
-  dfComplete <- data.frame(id=integer(0),nobs=numeric(0))
+  nFiles <- length(id)
+  print(paste("Num Files - ",nFiles))
+  dfComplete <- data.frame(id=integer(nFiles),nobs=numeric(nFiles))
   
   for (n in id) {
     # create file name by concatenating parts and adding leading zeros
@@ -23,9 +25,15 @@ complete <- function(directory, id = 1:332) {
     dfFile <- read.table(file, header=TRUE, sep = ",", stringsAsFactors = FALSE)
     
     OK <- complete.cases(dfFile)
-    print(paste("Class -",class(OK)))
+    # print(paste("Class -",class(OK)))
+    # print(paste("dfFile Str -", str(dfFile)))
+    # print(paste("dfFile Str -", str(OK)))
+    print(file)
+    print(n)
+    print(length(OK[OK]))
     
-    # dfComplete 
+    # dfComplete <- rbind(dfComplete, 
+    #                    data.frame(id=n, nobs=length(OK[OK])))
   }
   
   
