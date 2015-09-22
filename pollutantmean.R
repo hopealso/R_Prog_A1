@@ -24,6 +24,7 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     dfPollution <- rbind(dfFile, dfPollution)
   }
   
+  # as only the specified monitors (files) were loaded into dataframe, return mean of entire variable (column)
   return(mean(dfPollution[[pollutant]], na.rm = TRUE))
   
 }
