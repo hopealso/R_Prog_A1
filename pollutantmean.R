@@ -14,22 +14,16 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   ## NOTE: Do not round the result!
   
   dfPollution <- data.frame(Date=character(0), sulfate=numeric(0), nitrate=numeric(0), ID=integer(0))
-  ## print(dfPollution)
-  
+
   for (n in id) {
     # create file name by concatenating parts and adding leading zeros
     file <- file.path(directory, paste0(paste(rep("0", 3-nchar(n)), collapse=""), n, ".csv"))
-    print(file)
-    
+
     # read file and merge it with master data frame
     dfFile <- read.table(file, header=TRUE, sep = ",", stringsAsFactors = FALSE)
-    print(paste("Rows - ", nrow(dfFile)))
-    
     dfPollution <- rbind(dfFile, dfPollution)
-    print(paste("Total Rows - ", nrow(dfPollution)))
   }
   
-  ## return(dfPollution)
   return(mean(dfPollution[[pollutant]], na.rm = TRUE))
   
 }
