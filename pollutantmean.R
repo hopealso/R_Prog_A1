@@ -15,8 +15,8 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   
   ## dfPollution <- data.frame(matrix(nrow=length(id), ncol=4))
   ## names(dfPollution) <- c("Date","sulfate","nitrate","ID")
-  dfPollution <- data.frame()
-  ## print(dfPollution)
+  dfPollution <- data.frame(Date=character(0), sulfate=numeric(0), nitrate=numeric(0), ID=integer(0))
+  print(dfPollution)
   
   for (n in id) {
     # create file name by concatenating parts and adding leading zeros
@@ -24,7 +24,7 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     print(file)
     
     # read file and merge it with master data frame
-    dfFile <- read.table(file, header=TRUE, sep = ",")
+    dfFile <- read.table(file, header=TRUE, sep = ",", stringsAsFactors = FALSE)
     print(paste("Rows - ", nrow(dfFile)))
     
     dfPollution <- rbind(dfFile, dfPollution)
@@ -35,6 +35,7 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   print(paste("Class - ", class(dfPollution[pollutant])))
   print(paste("Mean -", mean(dfPollution)))
   
+  return(dfPollution)
   ## return(mean(dfPollution[pollutant], na.rm = TRUE))
   
 }
